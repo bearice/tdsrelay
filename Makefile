@@ -10,7 +10,7 @@ tdsrelay: tdsrelay.o
 
 
 clean:
-	rm -rf *.o
+	rm -rf *.o tdsrelay
 
 all: tdsrelay
  

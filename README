@@ -1,7 +1,8 @@
 tdsrelay is a MSSQL Server TDS Protocol Man-In-Middle attack tool with tproxy support
 = Note =
-1) Only systems without ca authencation and force enctyption (which is by default) will be affected.
-2) You should have NF_TPROXY(http://www.balabit.com/support/community/products/tproxy) enabled in your kernel then configure your box like:
+1) Only systems without ca authencation and force enctyption (which is by default) will be affected. MSSQL 2005 is tested and working.
+2) First of all, you have to let SQL traffic go though your box, with ARP cheating or bogus route for example.
+3) Also, you should have NF_TPROXY(http://www.balabit.com/support/community/products/tproxy) enabled in your kernel then configure your box like:
 		ip rule add fwmark 1 lookup 100
 		ip route add local 0.0.0.0/0 dev lo table 100
 		iptables -t mangle -N DIVERT
@@ -9,6 +10,7 @@ tdsrelay is a MSSQL Server TDS Protocol Man-In-Middle attack tool with tproxy su
 		iptables -t mangle -A DIVERT -j ACCEPT
 		iptables -t mangle -A PREROUTING -p tcp -m socket -j DIVERT
 		iptables -t mangle -A PREROUTING -p tcp --dport 1433 -j TPROXY --tproxy-mark 0x1/0x1 --on-port 1433
+4) run tdsrelay and wait.
 
 Copyleft 2010 bearice<at>gmail.com 
 Creative Commons BY-NC-SA 3.0 
